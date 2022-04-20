@@ -1,40 +1,52 @@
 
 import wollok.game.*
-import gameDemo.*
+import elementos.*
 
 program demo {
 
 	game.title("Demo Aventuras")
-	game.width(12)
-	game.height(12)
-	game.ground("ground.png")
+	game.width(10)
+	game.height(5)
+	game.addVisual(mario)
+	tomaco.position(0.randomUpTo(game.width().truncate(0)) , 0.randomUpTo(game.height().truncate(0)))
+	game.addVisual(tomaco)
 	
-	player.position(game.center())
 	
-	keyboard.up().onPressDo ({player.moveteArriba()})	
-	keyboard.down().onPressDo ({player.moveteAbajo()})	
-	keyboard.left().onPressDo ({player.moveteIzquierda()})	
-	keyboard.right().onPressDo ({player.moveteDerecha()})
-	keyboard.m().onPressDo({ 
-		game.say(player, "Maiz Plantado: " +  player.cantidadDeMaiz())
-	}
-	)	
-	
-	keyboard.p().onPressDo ({
-		var maiz = new Maiz(position = player.position().right(1))
-		player.agregarMaiz(maiz)
-		game.addVisual(maiz)
-		
+	keyboard.x().onPressDo({game.removeVisual(mario)})
+	keyboard.up().onPressDo({
+		if(mario.position().y() < game.height()- 1){
+			mario.position(mario.position().up(1))
+		}
+		else{mario.position (game.at(mario.position().x() , 0))}
 	})
 	
-	game.addVisual(player)
+	//game.ground("ground.png")
 	
-	game.whenCollideDo(player, { maiz =>  
-			player.moveteA(game.origin())
-			player.sacarMaiz(maiz)
-			game.removeVisual(maiz)	
-	} )
+    //player.position(game.center())
+	//keyboard.up().onPressDo ({player.moveteArriba()})	
+	//keyboard.down().onPressDo ({player.moveteAbajo()})	
+	//keyboard.left().onPressDo ({player.moveteIzquierda()})	
+	//keyboard.right().onPressDo ({player.moveteDerecha()})
+	//keyboard.m().onPressDo({ 
+	//	game.say(player, "Maiz Plantado: " +  player.cantidadDeMaiz())
+	//}
+	//)	
+	
+	//keyboard.p().onPressDo ({
+	//	var maiz = new Maiz(position = player.position().right(1))
+	//	player.agregarMaiz(maiz)
+	//	game.addVisual(maiz)
 		
-	game.start()
+	//})
+	
+	//game.addVisual(player)
+	
+	//game.whenCollideDo(player, { maiz =>  
+	//		player.moveteA(game.origin())
+	//		player.sacarMaiz(maiz)
+	//		game.removeVisual(maiz)	
+	//} )
+		
+	//game.start()
 
 }
